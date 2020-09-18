@@ -7,6 +7,6 @@ Official "LettersFall 110%" page on our website:
 https://fallenangelsoftware.com/lettersfall.html
 <br />
 <br />
-![LettersFall Image](LF5_Promo.png)
+![LettersFall Image](LF_Promo.png)
 <br />
 <br />
