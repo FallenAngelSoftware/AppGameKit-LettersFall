@@ -12,7 +12,7 @@ remstart
   | |___  |  __/ | |_  | |_  |  __/ | |    \__ \ |  _|  | (_| | | | | |   | | | | | |_| |  / /_
   |_____|  \___|  \__|  \__|  \___| |_|    |___/ |_|     \__,_| |_| |_|   |_| |_|  \___/  /_/(_)
 
-                                     Retail2 110% - v6.2.6               "Turbo!"
+                                     Retail2 110% - v6.2.6              "Turbo!"
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -84,10 +84,13 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 		Platform = iOS
 	endif
 
+	SetImmersiveMode(1) 
+
 	SetSyncRate( 30, 0 )
 	SetScissor( 0,0,0,0 )
+	SetVirtualResolution( ScreenWidth, ScreenHeight) //+40 )
 	OnMobile = TRUE
-	ShowCursor = FALSE
+	ShowCursor = FALSE	
 else
 	if ( GetDeviceBaseName() = "html5" ) then UseMP3andWAV = TRUE
 		
@@ -725,6 +728,13 @@ do
 
 	if (FrameCount > roundedFPS)
 		FrameCount = 0
+		
+		if (OnMobile = TRUE)
+			if (  ( GetDeviceWidth() <> 360 ) or ( GetDeviceHeight() <> 640 )  )
+				SetImmersiveMode(1)
+			endif
+		endif
+				
 		inc SecondsSinceStart, 1
 	endif
 
