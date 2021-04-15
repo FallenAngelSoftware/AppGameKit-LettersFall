@@ -110,9 +110,9 @@ global LoadPercent as float
 global LoadPercentFixed as integer
 
 // Uncomment below three lines to test Android version on desktop																			
- Platform = Android
- OnMobile = TRUE
- ShowCursor = FALSE
+// Platform = Android
+// OnMobile = TRUE
+// ShowCursor = FALSE
 
 SetClearColor( 0, 0, 0 ) 
 ClearScreen()
