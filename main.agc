@@ -12,7 +12,7 @@ remstart
   | |___  |  __/ | |_  | |_  |  __/ | |    \__ \ |  _|  | (_| | | | | |   | | | | | |_| |  / /_
   |_____|  \___|  \__|  \__|  \___| |_|    |___/ |_|     \__,_| |_| |_|   |_| |_|  \___/  /_/(_)
 
-                                     Retail2 110% - v6.2.6              "Turbo!"
+                                     Retail2 110% - v6.3.1              "Turbo!"
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -36,11 +36,11 @@ remend
 global DictionaryLetterLoading as integer
 
 global GameVersion as string
-GameVersion = "''Retail2 110% - Turbo! - v6.2.6''"
+GameVersion = "''Retail2 110% - Turbo! - v6.3.1''"
 global DataVersion as string
-DataVersion = "LF110-Retail2-110-Turbo-v6_2_1.cfg"
+DataVersion = "LF110-Retail2-110-Turbo-v6_3_1.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "LF6-v6_2_1-"
+HTML5DataVersion = "LF6-v6_3_1-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -110,9 +110,9 @@ global LoadPercent as float
 global LoadPercentFixed as integer
 
 // Uncomment below three lines to test Android version on desktop																			
-// Platform = Android
-// OnMobile = TRUE
-// ShowCursor = FALSE
+ Platform = Android
+ OnMobile = TRUE
+ ShowCursor = FALSE
 
 SetClearColor( 0, 0, 0 ) 
 ClearScreen()

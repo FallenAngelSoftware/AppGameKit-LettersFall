@@ -317,7 +317,15 @@ function DisplayTitleScreen( )
 			endif
 			SaveOptionsAndHighScores()
 		elseif ThisIconWasPressed(1) = TRUE
-			OpenBrowser( "https://play.google.com/store/apps/details?id=com.fallenangelsoftware.lettersfall" )
+			MusicVolume = 100
+			EffectsVolume = 100
+			SetVolumeOfAllMusicAndSoundEffects()
+			GUIchanged = TRUE
+			
+			MusicPlayerScreenIndex = 0
+
+			NextScreenToDisplay = MusicPlayerScreen
+			ScreenFadeStatus = FadingToBlack
 		endif
 
 		if ThisButtonWasPressed(0) = TRUE
@@ -349,16 +357,6 @@ function DisplayTitleScreen( )
 				ExitGame = 1
 			endif
 		endif
-		elseif ThisIconWasPressed(2) = TRUE
-			MusicVolume = 100
-			EffectsVolume = 100
-			SetVolumeOfAllMusicAndSoundEffects()
-			GUIchanged = TRUE
-			
-			MusicPlayerScreenIndex = 0
-
-			NextScreenToDisplay = MusicPlayerScreen
-			ScreenFadeStatus = FadingToBlack
 		endif
 	endif
 
