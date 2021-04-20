@@ -3,7 +3,7 @@
 remstart
 ---------------------------------------------------------------------------------------------------
                                            JeZxLee's
-                                                                   TM
+                                  Open-Source / Cross-Platform     TM
                              AppGameKit Classic "NightRider" Engine
                                         (Version 1.9.1)
    _              _     _                         _____          _   _     _   _    ___    _  __TM
@@ -12,15 +12,15 @@ remstart
   | |___  |  __/ | |_  | |_  |  __/ | |    \__ \ |  _|  | (_| | | | | |   | | | | | |_| |  / /_
   |_____|  \___|  \__|  \__|  \___| |_|    |___/ |_|     \__,_| |_| |_|   |_| |_|  \___/  /_/(_)
 
-                                     Retail2 110% - v6.3.1              "Turbo!"
-
+                                     Retail2 110% - v6.3.3              "Turbo!"
+                                           F I N A L
 ---------------------------------------------------------------------------------------------------     
 
            Google Android SmartPhones/Tablets & HTML5 Desktop/Notebook Internet Browsers
 
 ---------------------------------------------------------------------------------------------------                       
 
-                     (C)opyright 2019, By Team "www.FallenAngelSoftware.com"
+                     (C)opyright 2021, By Team "www.FallenAngelSoftware.com"
 
 ---------------------------------------------------------------------------------------------------
 remend
@@ -36,7 +36,7 @@ remend
 global DictionaryLetterLoading as integer
 
 global GameVersion as string
-GameVersion = "''Retail2 110% - Turbo! - v6.3.1''"
+GameVersion = "''Retail2 110% - Turbo! - v6.3.3 Final''"
 global DataVersion as string
 DataVersion = "LF110-Retail2-110-Turbo-v6_3_1.cfg"
 global HTML5DataVersion as String
@@ -66,9 +66,6 @@ SetOrientationAllowed( 1, 0, 0, 0 )
 #constant FALSE		0
 #constant TRUE		1
 
-global UseMP3andWAV as integer
-UseMP3andWAV = FALSE
-
 #constant Web		0
 #constant Android	1
 #constant iOS		2
@@ -92,8 +89,6 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 	OnMobile = TRUE
 	ShowCursor = FALSE	
 else
-	if ( GetDeviceBaseName() = "html5" ) then UseMP3andWAV = TRUE
-		
 	Platform = Web
 	SetVSync( 1 )
 	SetScissor( 0, 0, ScreenWidth, ScreenHeight )
@@ -729,12 +724,6 @@ do
 	if (FrameCount > roundedFPS)
 		FrameCount = 0
 		
-		if (OnMobile = TRUE)
-			if (  ( GetDeviceWidth() <> 360 ) or ( GetDeviceHeight() <> 640 )  )
-				SetImmersiveMode(1)
-			endif
-		endif
-				
 		inc SecondsSinceStart, 1
 	endif
 

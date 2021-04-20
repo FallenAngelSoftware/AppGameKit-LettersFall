@@ -483,10 +483,7 @@ function DisplayOptionsScreen( )
 			CreateIcon(3, (ScreenWidth/2), (ScreenHeight-100+13)-25 )
 		endif
 
-
-
 		ChangingBackground = FALSE
-
 		ScreenIsDirty = TRUE
 	endif
 
@@ -499,9 +496,6 @@ function DisplayOptionsScreen( )
 	if ThisIconWasPressed(0) = TRUE
 		OpenBrowser( "https://play.google.com/store/apps/details?id=com.fallenangelsoftware.lettersfall" )
 	endif
-
-
-	index as integer
 
 	if ThisArrowWasPressed(0) = TRUE
 		if MusicVolume > 0
@@ -1451,11 +1445,7 @@ indexX as integer
 				IconScreenY[1] = 622
 				SetSpritePositionByOffset( Icon[4], IconScreenX[1], IconScreenY[1] )
 
-				if (UseMP3andWAV = FALSE)
-					PauseMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
-				elseif (UseMP3andWAV = TRUE)
-					PauseMusic()
-				endif
+				PauseMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 			elseif (GamePausedStatus = TRUE)
 				if (GamePaused = -1)
 					GamePausedStatus = FALSE
@@ -1474,11 +1464,7 @@ indexX as integer
 					IconScreenY[1] = -9999
 					SetSpritePositionByOffset( Icon[4], IconScreenX[1], IconScreenY[1] )
 					
-					if (UseMP3andWAV = FALSE)
-						ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
-					elseif (UseMP3andWAV = TRUE)
-						ResumeMusic()
-					endif
+					ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 				endif
 			endif		
 		elseif (ThisIconWasPressed(1) = TRUE or ThisIconWasPressed(4) = true)
