@@ -3,25 +3,26 @@
 remstart
 ---------------------------------------------------------------------------------------------------
                                            JeZxLee's
-                                                                   TM
-                             AppGameKit Classic "NightRider" Engine
-                                        (Version 1.9.1)
-             _________                             _________                       
-            /   _____/__________    ____  ____    /   _____/_  _  _______  ______TM
-            \_____  \\____ \__  \ _/ ___\/ __ \   \_____  \\ \/ \/ /\__  \ \____ \ 
-            /        \  |_> > __ \\  \__\  ___/   /        \\     /  / __ \|  |_> >
-           /_______  /   __(____  /\___  >___  > /_______  / \/\_/  (____  /   __/ 
-                   \/|__|       \/     \/    \/          \/              \/|__|    
+                                  Open-Source / Cross-Platform    TM
+                             AppGameKit Studio "NightRider" Engine
+                                        (Version 2.0.0)
+   _              _     _                         _____          _   _     _   _    ___    _  __TM
+  | |       ___  | |_  | |_    ___   _ __   ___  |  ___|  __ _  | | | |   / | / |  / _ \  (_)/ /
+  | |      / _ \ | __| | __|  / _ \ | '__| / __| | |_    / _` | | | | |   | | | | | | | |   / /
+  | |___  |  __/ | |_  | |_  |  __/ | |    \__ \ |  _|  | (_| | | | | |   | | | | | |_| |  / /_
+  |_____|  \___|  \__|  \__|  \___| |_|    |___/ |_|     \__,_| |_| |_|   |_| |_|  \___/  /_/(_)
 
-                                     Retail1 110% - v1.4.0       TURBO!
-
+                                     Retail3 110% - v6.3.5              "Turbo!"
+                                           S T E A M
 ---------------------------------------------------------------------------------------------------     
 
+                         Valve's Steam Game Client For P.C. Windows(R)
+           
            Google Android SmartPhones/Tablets & HTML5 Desktop/Notebook Internet Browsers
 
 ---------------------------------------------------------------------------------------------------                       
 
-                     (C)opyright 2019, By Team "www.FallenAngelSoftware.com"
+                     (C)opyright 2022, By Team "www.FallenAngelSoftware.com"
 
 ---------------------------------------------------------------------------------------------------
 remend
@@ -34,12 +35,14 @@ remend
 #include "screens.agc"
 #include "visuals.agc"
 
+global DictionaryLetterLoading as integer
+
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v1.4.0''"
+GameVersion = "''Retail3 110% - Turbo! - v6.3.5(WIP)''"
 global DataVersion as string
-DataVersion = "SS110-Retail1-110-Turbo-v1_3_5.cfg"
+DataVersion = "LF110-Retail3-110-Turbo-v6_3_5.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "SS-v1_3_5-"
+HTML5DataVersion = "LF6-v6_3_5-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -54,7 +57,7 @@ global ScreenHeight = 640
 global ExitGame as integer
 ExitGame = 0
 
-SetWindowTitle( "Space Swap 110%[TM]" )
+SetWindowTitle( "LettersFall 110%[TM]" )
 SetWindowSize( ScreenWidth, ScreenHeight, 0 )
 SetWindowAllowResize( 1 )
 
@@ -65,13 +68,10 @@ SetOrientationAllowed( 1, 0, 0, 0 )
 #constant FALSE		0
 #constant TRUE		1
 
-global DEBUG = FALSE
-
 #constant Web		0
 #constant Android	1
 #constant iOS		2
 #constant Windows	3
-#constant Linux		4
 global Platform as integer
 
 global OnMobile as integer
@@ -89,24 +89,16 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 	SetScissor( 0,0,0,0 )
 	SetVirtualResolution( ScreenWidth, ScreenHeight) //+40 )
 	OnMobile = TRUE
-	ShowCursor = FALSE
+	ShowCursor = FALSE	
 else
 	Platform = Web
-	if (MaximumFrameRate = 0)
-		SetSyncRate( 30, 1 )
-	else
-		SetSyncRate( 0, 1 )
-	endif
-	SetScissor( 0, 1, ScreenWidth, ScreenHeight )
+	SetVSync( 1 )
+	SetScissor( 0, 0, ScreenWidth, ScreenHeight )
 	OnMobile = FALSE
 	ShowCursor = TRUE
 endif
 
-if (GetDeviceBaseName() = "windows")
-	Platform = Windows
-elseif (GetDeviceBaseName() = "linux")
-	Platform = Linux
-endif
+if (GetDeviceBaseName() = "windows" or GetDeviceBaseName() = "linux") then Platform = Windows
 
 global GameUnlocked as integer
 GameUnlocked = 2
@@ -115,12 +107,9 @@ global LoadPercent as float
 global LoadPercentFixed as integer
 
 // Uncomment below three lines to test Android version on desktop																			
- Platform = Android
- OnMobile = TRUE
- ShowCursor = FALSE
-
-global PlayingSyncRate as integer
-PlayingSyncRate = 30
+// Platform = Android
+// OnMobile = TRUE
+// ShowCursor = FALSE
 
 SetClearColor( 0, 0, 0 ) 
 ClearScreen()
@@ -131,19 +120,44 @@ global FingerPlayfieldY as integer
 global GameIsPlaying as integer
 GameIsPlaying = FALSE
 
+LoadImage ( 75, "\media\images\backgrounds\GameOver.png" )
 global GameOverTimer as integer
 
 global GameOverSprite as integer
 
 global PlayfieldIsDirty as integer
 
+global FallingLetterSpeed as float[6]
+global FallingLetterDecimalCounter as float
+
+global DictionaryMemBlock as integer[26]
+global DictionaryString as String[0,0]
+DictionaryString.length = 26
+global CurrentWordSelected as string
+global CheckWordRed as integer
+global CheckWordGreen as integer
+global CheckWordBlue as integer
+global CheckWordColorTimer as integer
+
+global LevelAdvanceCounter as integer
 global WonGame as integer
-WonGame = FALSE
+
+global NewLevelText as integer
+global NewLevelTextAlpha as integer
+global NewLevelTextAlphaDirection as integer
+global NewLevelTextDisplayDelay as integer
+
+#constant PlayingGame				1
+#constant ClearingWord				2
+#constant ApplyingGravity				3
+global GameStatus = PlayingGame
+
+global CorrectWordTileAndCharAlpha as integer
 
 global MouseScreenX = 0
 global MouseScreenY = 0
 #constant OFF						0
-#constant ON						1
+#constant ON							1
 global MouseButtonLeft = OFF
 global MouseButtonLeftJustClicked as integer
 global MouseButtonLeftReleased as integer
@@ -177,12 +191,14 @@ global KeyboardControls as integer
 
 global LastKeyboardChar = -1
 
+global LaskKeyboardKey = -1
+
 global DelayAllUserInput as integer
 DelayAllUserInput = 0
 
-#constant FadingIdle				-1
-#constant FadingFromBlack			0
-#constant FadingToBlack				1
+#constant FadingIdle			-1
+#constant FadingFromBlack 	 0
+#constant FadingToBlack 	 	1
 global ScreenFadeStatus as integer
 ScreenFadeStatus = FadingFromBlack
 global ScreenFadeTransparency as integer
@@ -196,20 +212,38 @@ SetSpriteDepth ( FadingBlackBG, 1 )
 SetSpriteOffset( FadingBlackBG, (GetSpriteWidth(FadingBlackBG)/2) , (GetSpriteHeight(FadingBlackBG)/2) ) 
 SetSpritePositionByOffset( FadingBlackBG, ScreenWidth/2, ScreenHeight/2 )
 SetSpriteTransparency( FadingBlackBG, 1 )
-global FadingToBlackCompleted as integer
-FadingToBlackCompleted = FALSE
 
 UseNewDefaultFonts( 1 )
-LoadFont( 999, "\media\fonts\StardosStencil-Bold.ttf" )
+LoadFont( 999, "\media\fonts\FreeSansBold.ttf" )
 global CurrentMinTextIndex = 1
 
+LoadImage ( 3, "\media\images\backgrounds\FadingBlackBG.png" )
+global Resume as integer
+
+LoadImage ( 5, "\media\images\logos\AppGameKitLogo.png" )
 global AppGameKitLogo as integer
 
+LoadImage ( 8, "\media\images\story\Act3of3\bg.png" )
+LoadImage ( 9, "\media\images\story\Act3of3\char.png" )
+global Kiss as integer
+
+LoadImage ( 10, "\media\images\backgrounds\TitleBG.png" )
+LoadImage ( 20, "\media\images\backgrounds\TitleBlurBG.png" )
+LoadImage ( 11, "\media\images\backgrounds\TitleTwoBG.png" )
+LoadImage ( 21, "\media\images\backgrounds\TitleTwoBlurBG.png" )
+LoadImage ( 12, "\media\images\backgrounds\TitleThreeBG.png" )
+LoadImage ( 22, "\media\images\backgrounds\TitleThreeBlurBG.png" )
+LoadImage ( 13, "\media\images\backgrounds\TitleFourBG.png" )
+LoadImage ( 23, "\media\images\backgrounds\TitleFourBlurBG.png" )
 global TitleBG as integer
 
+LoadSelectedBackground()
+
+LoadImage (30, "\media\images\logos\FAS-Statue.png")
 global SixteenBitSoftLogo as integer
 
-global SS110Logo as integer
+LoadImage ( 35, "\media\images\logos\LF110-Logo2.png" )
+global LF110Logo as integer
 
 global NewNameText as integer
 global NewHighScoreCurrentName as String
@@ -220,24 +254,27 @@ NewHighScoreNameIndex = 1
 global PauseGame as integer
 PauseGame = FALSE
 
-#constant SteamOverlayScreen						0
+#constant SteamOverlayScreen							0
 #constant AppGameKitScreen							1
 #constant SixteenBitSoftScreen						2
 #constant TitleScreen								3
 #constant OptionsScreen								4
-#constant HowToPlayScreen							5
+#constant HowToPlayScreen								5
 #constant HighScoresScreen							6
 #constant AboutScreen								7
 #constant IntroSceneScreen							8
 #constant PlayingScreen								9
-#constant EndingSceneScreen							10
-#constant NewHighScoreNameInputScreen				11
-#constant NewHighScoreNameInputAndroidScreen		12
+#constant FiveSceneScreen								10
+#constant NewHighScoreNameInputScreen					11
+#constant NewHighScoreNameInputAndroidScreen			12
 #constant MusicPlayerScreen							13
 global ScreenToDisplay = 3
-global NextScreenToDisplay = 4
-global ScreenDisplayTimer as integer
-	
+if (OnMobile = FALSE) then ScreenToDisplay = 0
+global NextScreenToDisplay = 1
+global ScreenDisplayTimer = 0
+
+global ClickToContinueText as integer
+
 global MusicPlayerScreenIndex as integer
 MusicPlayerScreenIndex = 0
 
@@ -321,6 +358,16 @@ LoadImage ( 303, "\media\images\logos\ReviewGooglePlayLogo.png" )
 LoadImage ( 304, "\media\images\gui\Exit.png" )
 LoadImage ( 305, "\media\images\gui\Pause.png" )
 LoadImage ( 306, "\media\images\gui\Play.png" )
+LoadImage ( 307, "\media\images\logos\OptionsBanner.png" )
+
+LoadImage ( 43, "\media\images\playing\UndoArrow.png" )
+
+LoadImage ( 44, "\media\images\playing\Bomb.png" )
+
+LoadImage ( 45, "\media\images\playing\CheckWordSmaller.png" )
+
+LoadImage ( 50, "\media\images\gui\BombLeft.png" )
+LoadImage ( 51, "\media\images\gui\BombRight.png" )
 
 global IconIndex as integer[100]
 global IconSprite as integer[100]
@@ -345,20 +392,20 @@ LoadInterfaceSprites()
 PreRenderButtonsWithTexts()
 
 global CurrentlyPlayingMusicIndex = -1
-#constant MusicTotal						11
+#constant MusicTotal 						14
 global MusicTrack as integer[MusicTotal]
 LoadAllMusic()
 
-#constant EffectsTotal						12
+#constant EffectsTotal						14
 global SoundEffect as integer[EffectsTotal]
 LoadAllSoundEffects()
 
 global MusicSoundtrack	as integer
 MusicSoundtrack = 0
 
-#constant ChildStoryMode				0
+#constant ChildStoryMode					0
 #constant TeenStoryMode					1
-#constant AdultStoryMode				2
+#constant AdultStoryMode					2
 #constant ChildNeverEndMode				3
 #constant TeenNeverEndMode				4
 #constant AdultNeverEndMode				5
@@ -388,32 +435,33 @@ GameOver = 0
 global PlayerRankOnGameOver as integer
 PlayerRankOnGameOver = 999
 
+global GameWon as integer
+GameWon = FALSE
+
 mode as integer
 global HighScoreName as string[5, 10]
 global HighScoreLevel as integer[5, 10]
 global HighScoreScore as integer[5, 10]
 
-global LevelSkip as integer[6]
-LevelSkip[0] = 1
-LevelSkip[1] = 1
-LevelSkip[2] = 1
-LevelSkip[3] = 1
-LevelSkip[4] = 1
-LevelSkip[5] = 1
+global LevelSkip as integer[5]
+LevelSkip[0] = 0
+LevelSkip[1] = 0
+LevelSkip[2] = 0
+LevelSkip[3] = 0
+LevelSkip[4] = 0
+LevelSkip[5] = 0
 global StartingLevel as integer
-StartingLevel = 1
+StartingLevel = 0
 
 ClearHighScores()
 
 global AboutTexts as string[99999]
 global AboutTextsScreenY as integer[99999]
 global AboutTextsBlue as integer[99999]
-global AboutTextVisable as integer[99999]
 for index = 0 to 99998
 	AboutTexts[index] = "Should Not See"
 	AboutTextsScreenY[index] = 99999
 	AboutTextsBlue[index] = 255
-	AboutTextVisable[index] = 0
 next index
 
 global ATindex = 0
@@ -434,146 +482,116 @@ LoadAboutScreenTexts()
 
 global ChangingBackground as integer
 ChangingBackground = FALSE
-global GameSpeed as integer
-GameSpeed = 30
+global SelectedBackground as integer
+SelectedBackground = 0
 
 global Score as integer
 global ScoreText as integer
 global Level as integer
 global LevelText as integer
-global LevelTextTwo as integer
+global Bombs as integer
+global BombsText as integer
 
-global FreezeText as integer
-global FreezeTextTwo as integer
+global Playfield as string[11, 19]
+global PlayfieldLetterTextIndex as integer[11, 19]
 
-global Playfield as integer[6, 13]
-global PlayfieldBackup as integer[6, 13]
+global SelectedLetterWordIndex as integer
 
-global PlayfieldColoredBoxIndex as integer[6, 13]
-global BoxRedSprite as integer[82]
-global BoxRedUsed as integer
-global BoxOrangeSprite as integer[82]
-global BoxOrangeUsed as integer
-global BoxYellowSprite as integer[82]
-global BoxYellowUsed as integer
-global BoxGreenSprite as integer[82]
-global BoxGreenUsed as integer
-global BoxBlueSprite as integer[82]
-global BoxBlueUsed as integer
-global BoxPurpleSprite as integer[82]
-global BoxPurpleUsed as integer
+global SelectedLettersTextIndex as integer[12]
+global SelectedLettersPlayfieldX as integer[12]
+global SelectedLettersPlayfieldY as integer[12]
+global SelectedLetters as string[12]
 
-global SelectorSprite as integer
-global PlayerScreenX as integer
-global PlayerScreenY as integer
-global PlayerPlayfieldX as integer
-global PlayerPlayfieldY as integer
+global FallingLettersAfterBombMovePlayfieldX as integer
+FallingLettersAfterBombMovePlayfieldX = -1
 
-global PlayfieldOffsetY as float
-global PlayfieldOffsetYDelay as float
-global PlayfieldOffsetYDelayTime as integer[6]
-PlayfieldOffsetYDelayTime[0] = 3
-PlayfieldOffsetYDelayTime[1] = 1
-PlayfieldOffsetYDelayTime[2] = 2
-PlayfieldOffsetYDelayTime[3] = 3
-PlayfieldOffsetYDelayTime[4] = 1
-PlayfieldOffsetYDelayTime[5] = 2
+LoadImage ( 40, "\media\images\backgrounds\PlayfieldBG.png" )
+global PlayfieldSprite as integer
 
-global BoxBlackSprite as integer[6]
+LoadImage ( 41, "\media\images\playing\LetterTile.png" )
+global LetterTileSprite as integer[11, 19]
+global SelectedLettersTileSprite as integer[11]
 
-global BoxWhiteSprite as integer[82]
-global BoxWhiteUsed as integer
-
-global PlayerMovementDelay as integer
-
-global PlayerMovePlayfieldX as integer
-global PlayerMovePlayfieldY as integer
-
-global PlayerSwapPieceOne as integer
-global PlayerSwapPieceTwo as integer
-global PlayerSwapPieceOneScreenX as integer
-global PlayerSwapPieceTwoScreenX as integer
-global PlayerSwapPiecesScreenY as integer
-global PlayerSwapMovement as integer
-
-global PlayerSwapOnePlayfieldX as integer
-global PlayerSwapOnePlayfieldY as integer
-global PlayerSwapTwoPlayfieldX as integer
-global PlayerSwapTwoPlayfieldY as integer
-
-global PlayerSwapDirection as integer
-
-global PiecesFell as integer
-
-global MatchFlashTimer as integer
-
-global NumberOfPiecesCleared as integer
-global NumberOfMatchesCleared as integer
-
-global TimeFreezeTimer as integer
-
-global NumberOfCombos as integer
-
-global ComboTakenCareOf as integer
-
-global LevelAdvancePieceCounter as integer
-global LevelAdvancePieceCount as integer[6]
-LevelAdvancePieceCount[0] = 30
-LevelAdvancePieceCount[1] = 60
-LevelAdvancePieceCount[2] = 45
-LevelAdvancePieceCount[3] = 30
-LevelAdvancePieceCount[4] = 60
-LevelAdvancePieceCount[5] = 45
-
-global StagingScore as integer
-global StagingLevelAdvance as integer
-
-global PlayfieldTopSprite as integer
-global PlayfieldRightSprite as integer
-global PlayfieldBottomSprite as integer
-global PlayfieldLeftSprite as integer
-
-global IntroEarthBGSprite as integer
-global IntroEarthSprite as integer
-global IntroShuttleSprite as integer
-global IntroStarsSprite as integer[5]
-
-global IntroAnimationStep as integer
-global IntroEarthScale as float
-global IntroShuttleScale as float
-global IntroShuttleScreenX as integer
-global IntroShuttleScreenY as integer
-global IntroStarsScale as float[5]
-
-global EndingEarthBGSprite as integer
-global EndingEarthSprite as integer
-global EndingShuttleSprite as integer
-global EndingStarsSprite as integer[5]
-global EndingAsteroidSprite as integer
-global EndingExplosionSprite as integer
-
-global EndingAnimationStep as integer
-global EndingEarthScale as float
-global EndingEarthScreenX as integer
-global EndingEarthScreenY as integer
-global EndingShuttleScale as float
-global EndingShuttleScreenX as integer
-global EndingShuttleScreenY as integer
-global EndingStarsScale as float[5]
-global EndingAsteroidScale as float
-global EndingAsteroidScreenX as integer
-global EndingAsteroidScreenY as integer
-global EndingExplosionScale as float
-global EndingExplosionAlpha as integer
-
+LoadImage ( 42, "\media\images\backgrounds\GamePausedBG.png" )
 global GamePausedBG as integer
 global GamePaused as integer
 
-global BonusSprite as integer
-global PlayfieldLow as integer
+LoadImage ( 46, "\media\images\playing\BombMeter.png" )
+global BombMeterSprite as integer
+global BombMeterScaleX as float
 
-global IntroText as integer
-global TextFlash as integer
+global BombFallingSprite as integer
+global BombHitPlayfieldX as integer
+global BombHitPlayfieldY as integer
+
+LoadImage ( 47, "\media\images\playing\Explosion.png" )
+global ExplosionSprite as integer
+global ExplosionScale as float
+global ExplosionAlpha as integer
+global NextFallingIsBomb as integer
+
+global FallingLettersCount as integer
+global FallingLettersTileSprite as integer[3]
+global FallingLettersLetter as string[3]
+global FallingLettersPlayfieldX as integer[3]
+global FallingLettersPlayfieldY as integer[3]
+global FallingLettersScreenY as integer[3]
+global FallingLettersScreenYstep as integer[3]
+global FallingLettersTextIndex as integer[3]
+
+global HowToPlayWordsTileSprite as integer[5]
+
+LoadImage ( 26, "\media\images\backgrounds\HowToPlayLetters.png" )
+global HowToPlayLetters as integer
+
+LoadImage ( 48, "\media\images\backgrounds\HowToPlay2BG.png" )
+global HowToPlayBG as integer
+
+LoadImage ( 49, "\media\images\gui\ArrowIcon.png" )
+global ArrowIconSprite as integer
+global ArrowIconAnimationStep as integer
+global ArrowIconAnimationDelay as integer
+
+LoadImage ( 149, "\media\images\backgrounds\YouWin.png" )
+global YouWinSprite as integer
+
+LoadImage ( 150, "\media\images\story\Act1of3\bg.png" )
+global ActOneBG as integer
+LoadImage ( 151, "\media\images\story\Act1of3\boy.png" )
+global ActOneBoy as integer
+global ActOneBoyScreenX as integer
+LoadImage ( 152, "\media\images\story\Act1of3\girl.png" )
+global ActOneGirl as integer
+global ActOneGirlScreenX as integer
+LoadImage ( 153, "\media\images\story\Act1of3\TextBox.png" )
+global ActOneTextBox as integer
+global ActOneAnimationStep as integer
+global ActOneBoyText as string
+global ActOneBoyTextIndex as integer
+global ActOneBoyTextToDisplay as integer
+global ActOneGirlText as string
+global ActOneGirlTextIndex as integer
+global ActOneGirlTextToDisplay as integer
+global ActOneTextDisplayTimer as integer
+
+LoadImage ( 154, "\media\images\story\Act2of3\bg-b.png" )
+global ActTwoBG as integer
+LoadImage ( 155, "\media\images\story\Act2of3\boy.png" )
+global ActTwoBoy as integer
+global ActTwoBoyAlpha as integer
+LoadImage ( 156, "\media\images\story\Act2of3\girl.png" )
+global ActTwoGirl as integer
+global ActTwoGirlAlpha as integer
+LoadImage ( 157, "\media\images\story\Act2of3\TextBox.png" )
+global ActTwoTextBox as integer
+global ActTwoAnimationStep as integer
+global ActTwoBoyText as string
+global ActTwoBoyTextIndex as integer
+global ActTwoBoyTextToDisplay as integer
+global ActTwoGirlText as string
+global ActTwoGirlTextIndex as integer
+global ActTwoGirlTextToDisplay as integer
+global ActTwoTextDisplayTimer as integer
 
 global FrameCount as integer
 FrameCount = 0
@@ -604,13 +622,6 @@ FramesPerSecond = 30
 LoadOptionsAndHighScores()
 SetVolumeOfAllMusicAndSoundEffects()
 
-if (DEBUG = TRUE)
-	SecretCode[0] = 2
-	SecretCode[1] = 7
-	SecretCode[2] = 7
-	SecretCode[3] = 7
-endif
-
 SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 
 global ScreenIsDirty as integer
@@ -618,9 +629,11 @@ ScreenIsDirty = TRUE
 
 global LoadPercentText as integer
 
-global GameQuit as integer
+global FrameSkip as integer
 
-PlayNewMusic(0, 1)
+global QuitGame as integer
+
+if (OnMobile = TRUE) then  PlayNewMusic(0, 1)
 
 global CurrentIconBeingPressed as integer
 CurrentIconBeingPressed = -1
@@ -628,6 +641,8 @@ global CurrentKeyboardKeyPressed as integer
 CurrentKeyboardKeyPressed = -1
 
 global multiplier as float
+
+global GamePausedStatus as integer
 
 do
 	inc FrameCount, 1
@@ -675,8 +690,8 @@ do
 			DisplayPlayingScreen()
 		endcase
 
-		case EndingSceneScreen:
-			DisplayEndingSceneScreen()
+		case FiveSceneScreen:
+			DisplayFiveSceneScreen()
 		endcase
 
 		case NewHighScoreNameInputScreen:
@@ -708,19 +723,7 @@ do
 	roundedFPS = Round( ScreenFPS() )
 
 	if (roundedFPS > 0)
-		if (ScreenToDisplay = PlayingScreen)
-			if (PlayingSyncRate = 20)
-				PerformancePercent = (20 / roundedFPS)
-			elseif (PlayingSyncRate = 30)
-				PerformancePercent = (30 / roundedFPS)
-			elseif (PlayingSyncRate = 45)
-				PerformancePercent = (45 / roundedFPS)
-			elseif (PlayingSyncRate = 60)
-				PerformancePercent = (60 / roundedFPS)
-			endif
-		elseif (PlayingSyncRate = 30)
-			PerformancePercent = (30 / roundedFPS)
-		endif
+		PerformancePercent = (60 / roundedFPS)
 	else
 		PerformancePercent = 1
 	endif
@@ -728,27 +731,21 @@ do
 	if (FrameCount > roundedFPS)
 		FrameCount = 0
 		
-		if (OnMobile = TRUE)
-			if (  ( GetDeviceWidth() <> 360 ) or ( GetDeviceHeight() <> 640 )  )
-				SetImmersiveMode(1)
-			endif
-		endif
-				
 		inc SecondsSinceStart, 1
 	endif
 
 	if (SecretCodeCombined = 2777 and ScreenIsDirty = TRUE)
 		if (ScreenFadeStatus = FadingIdle)
 			if (ScreenToDisplay = AboutScreen)
-				SetSpritePositionByOffset( FadingBlackBG,  -80, AboutScreenFPSY )
+				SetSpritePositionByOffset( FadingBlackBG,  -80+30, AboutScreenFPSY )
 			else
-				SetSpritePositionByOffset( FadingBlackBG,  -80, -200 )
+				SetSpritePositionByOffset( FadingBlackBG,  -80+30, -200 )
 			endif			
 			SetSpriteColorAlpha( FadingBlackBG, 200 )
 		else
 			SetSpritePositionByOffset( FadingBlackBG,  ScreenWidth/2, ScreenHeight/2 )
 		endif
-
+		
 		if (PrintColorDir = 0)
 			if (PrintColor > 0)
 				dec PrintColor, 51
@@ -768,11 +765,12 @@ do
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
 		Print ( "FPS="+str(roundedFPS) )
 		print (  "Sprite(s): "+str( GetManagedSpriteCount() )  )
-		print ( "Pieces="+str(NumberOfPiecesCleared) )
-		print ( "Matches="+str(NumberOfMatchesCleared) )
-		print ( "MTimer="+str(MatchFlashTimer) )
-		print ( "#Combos="+str(NumberOfCombos) )
-		print ( "Per%"+str(PerformancePercent) )
+		print ( Platform )
+//		print ( "GamePaused:"+str(GamePaused) )
+//		print ( "PauseStat:"+str(GamePausedStatus) )
+//		print ( "IconPressed:"+str(CurrentIconBeingPressed) )
+		print ( "LastKeyboardChar:"+str(LastKeyboardChar) )
+		print ( "LaskKeyboardKey:"+str(LaskKeyboardKey) )
 	endif
 
 	if (ScreenIsDirty = TRUE)
@@ -784,7 +782,5 @@ do
 		exit
 	endif
 loop
-
-end
 rem                                      [TM]
 rem "A 110% By Team Fallen Angel Software!"

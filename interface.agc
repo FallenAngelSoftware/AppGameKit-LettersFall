@@ -1,27 +1,20 @@
 // "interface.agc"...
 
 function LoadInterfaceSprites()
-	titleInteface as integer
-	titleInteface = 0
-	if (ScreenToDisplay <> PlayingScreen) then titleInteface = 1
-		
 	LeftArrow = CreateSprite ( 100 )
 	SetSpriteDepth ( LeftArrow, 3 )
 	SetSpriteOffset( LeftArrow, (GetSpriteWidth(LeftArrow)/2) , (GetSpriteHeight(LeftArrow)/2) ) 
 	SetSpritePositionByOffset( LeftArrow, -9999, -9999 )
-	SetSpriteVisible( LeftArrow, titleInteface )
 
 	RightArrow = CreateSprite ( 101 )
 	SetSpriteDepth ( RightArrow, 3 )
 	SetSpriteOffset( RightArrow, (GetSpriteWidth(RightArrow)/2) , (GetSpriteHeight(RightArrow)/2) ) 
 	SetSpritePositionByOffset( RightArrow, -9999, -9999 )
-	SetSpriteVisible( RightArrow, titleInteface )
 
 	SelectorLine = CreateSprite ( 122 )
 	SetSpriteDepth ( SelectorLine, 4 )
 	SetSpriteOffset( SelectorLine, (GetSpriteWidth(SelectorLine)/2) , (GetSpriteHeight(SelectorLine)/2) ) 
 	SetSpritePositionByOffset( SelectorLine, -9999, -9999 )
-	SetSpriteVisible( SelectorLine, titleInteface )
 
 	index as integer
 	for index = 0 to 9
@@ -29,70 +22,89 @@ function LoadInterfaceSprites()
 		SetSpriteDepth ( LeftArrowSet[index], 3 )
 		SetSpriteOffset( LeftArrowSet[index], (GetSpriteWidth(LeftArrowSet[index])/2) , (GetSpriteHeight(LeftArrowSet[index])/2) ) 
 		SetSpritePositionByOffset( LeftArrowSet[index], -9999, -9999 )
-		SetSpriteVisible( LeftArrowSet[index], titleInteface )
 
 		RightArrowSet[index] = CreateSprite ( 121 )
 		SetSpriteDepth ( RightArrowSet[index], 3 )
 		SetSpriteOffset( RightArrowSet[index], (GetSpriteWidth(RightArrowSet[index])/2) , (GetSpriteHeight(RightArrowSet[index])/2) ) 
 		SetSpritePositionByOffset( RightArrowSet[index], -9999, -9999 )
-		SetSpriteVisible( RightArrowSet[index], titleInteface )
 	next index
 
 	Icon[0] = CreateSprite ( 300 )
 	SetSpriteDepth ( Icon[0], 2 )
 	SetSpriteOffset( Icon[0], (GetSpriteWidth(Icon[0])/2) , (GetSpriteHeight(Icon[0])/2) ) 
 	SetSpritePositionByOffset( Icon[0], -9999, -9999 )
-	SetSpriteVisible( Icon[0], 1 )
 
 	Icon[1] = CreateSprite ( 301 )
 	SetSpriteDepth ( Icon[1], 2 )
 	SetSpriteOffset( Icon[1], (GetSpriteWidth(Icon[1])/2) , (GetSpriteHeight(Icon[1])/2) ) 
 	SetSpritePositionByOffset( Icon[1], -9999, -9999 )
-	SetSpriteVisible( Icon[1], 1 )
 
 	Icon[2] = CreateSprite ( 302 )
 	SetSpriteDepth ( Icon[2], 2 )
 	SetSpriteOffset( Icon[2], (GetSpriteWidth(Icon[2])/2) , (GetSpriteHeight(Icon[2])/2) ) 
 	SetSpritePositionByOffset( Icon[2], -9999, -9999 )
-	SetSpriteVisible( Icon[2], 1 )
 
 	Icon[3] = CreateSprite ( 303 )
 	SetSpriteDepth ( Icon[3], 2 )
 	SetSpriteOffset( Icon[3], (GetSpriteWidth(Icon[3])/2) , (GetSpriteHeight(Icon[3])/2) ) 
 	SetSpritePositionByOffset( Icon[3], -9999, -9999 )
-	SetSpriteVisible( Icon[3], 1 )
 
 	Icon[4] = CreateSprite ( 304 )
 	SetSpriteDepth ( Icon[4], 2 )
 	SetSpriteOffset( Icon[4], (GetSpriteWidth(Icon[4])/2) , (GetSpriteHeight(Icon[4])/2) ) 
 	SetSpritePositionByOffset( Icon[4], -9999, -9999 )
-	SetSpriteVisible( Icon[4], 1 )
 
 	Icon[5] = CreateSprite ( 305 )
 	SetSpriteDepth ( Icon[5], 2 )
 	SetSpriteOffset( Icon[5], (GetSpriteWidth(Icon[5])/2) , (GetSpriteHeight(Icon[5])/2) ) 
 	SetSpritePositionByOffset( Icon[5], -9999, -9999 )
-	SetSpriteVisible( Icon[5], 1 )
 
 	Icon[6] = CreateSprite ( 306 )
 	SetSpriteDepth ( Icon[6], 2 )
 	SetSpriteOffset( Icon[6], (GetSpriteWidth(Icon[6])/2) , (GetSpriteHeight(Icon[6])/2) ) 
 	SetSpritePositionByOffset( Icon[6], -9999, -9999 )
-	SetSpriteVisible( Icon[6], 1 )
+
+	Icon[7] = CreateSprite ( 307 )
+	SetSpriteDepth ( Icon[7], 2 )
+	SetSpriteOffset( Icon[7], (GetSpriteWidth(Icon[7])/2) , (GetSpriteHeight(Icon[7])/2) ) 
+	SetSpritePositionByOffset( Icon[7], -9999, -9999 )
+
+	Icon[80] = CreateSprite ( 43 )
+	SetSpriteDepth ( Icon[80], 2 )
+	SetSpriteOffset( Icon[80], (GetSpriteWidth(Icon[80])/2) , (GetSpriteHeight(Icon[80])/2) ) 
+	SetSpritePositionByOffset( Icon[80], -9999, -9999 )
+
+	Icon[81] = CreateSprite ( 44 )
+	SetSpriteDepth ( Icon[81], 2 )
+	SetSpriteOffset( Icon[81], (GetSpriteWidth(Icon[81])/2) , (GetSpriteHeight(Icon[81])/2) ) 
+	SetSpritePositionByOffset( Icon[81], -9999, -9999 )
+
+	Icon[82] = CreateSprite ( 45 )
+	SetSpriteDepth ( Icon[82], 2 )
+	SetSpriteOffset( Icon[82], (GetSpriteWidth(Icon[82])/2) , (GetSpriteHeight(Icon[82])/2) ) 
+	SetSpritePositionByOffset( Icon[82], -9999, -9999 )
+
+	Icon[83] = CreateSprite ( 50 )
+	SetSpriteDepth ( Icon[83], 2 )
+	SetSpriteOffset( Icon[83], (GetSpriteWidth(Icon[83])/2) , (GetSpriteHeight(Icon[83])/2) ) 
+	SetSpritePositionByOffset( Icon[83], -9999, -9999 )
+
+	Icon[84] = CreateSprite ( 51 )
+	SetSpriteDepth ( Icon[84], 2 )
+	SetSpriteOffset( Icon[84], (GetSpriteWidth(Icon[84])/2) , (GetSpriteHeight(Icon[84])/2) ) 
+	SetSpritePositionByOffset( Icon[84], -9999, -9999 )
 
 	NameInputCharSprite = CreateSprite ( 130 )
 	SetSpriteDepth ( NameInputCharSprite, 3 )
 	SetSpriteOffset( NameInputCharSprite, (GetSpriteWidth(NameInputCharSprite)/2) , (GetSpriteHeight(NameInputCharSprite)/2) ) 
 	SetSpritePositionByOffset( NameInputCharSprite, -9999, -9999 )
-	SetSpriteVisible( NameInputCharSprite, 1 )
 
 	for index = 0 to 9
 		ScreenLine[index] = CreateSprite ( 140 )
 		SetSpriteDepth ( ScreenLine[index], 3 )
 		SetSpriteOffset( ScreenLine[index], (GetSpriteWidth(ScreenLine[index])/2) , (GetSpriteHeight(ScreenLine[index])/2) ) 
 		SetSpritePositionByOffset( ScreenLine[index], -9999, -9999 )
-		SetSpriteVisible( ScreenLine[index], titleInteface )
-	next index	
+	next index
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -278,7 +290,7 @@ function ThisButtonWasPressed(buttonToCheck as integer)
 
 								PlaySoundEffect(0)
 								GUIchanged = TRUE	
-								SetDelayAllUserInput()
+								SetDelayAllUserInput(14)
 							elseif JoystickDirection = JoyDOWN
 								if ButtonSelectedByKeyboard < (NumberOfButtonsOnScreen-1)
 									inc ButtonSelectedByKeyboard, 1
@@ -288,7 +300,7 @@ function ThisButtonWasPressed(buttonToCheck as integer)
 
 								PlaySoundEffect(0)
 								GUIchanged = TRUE	
-								SetDelayAllUserInput()
+								SetDelayAllUserInput(14)
 							endif
 						endif
 
@@ -297,7 +309,7 @@ function ThisButtonWasPressed(buttonToCheck as integer)
 							
 							PlaySoundEffect(1)
 							
-							SetDelayAllUserInput()
+							SetDelayAllUserInput(14)
 						endif
 
 						if MouseButtonLeft = ON
@@ -314,7 +326,7 @@ function ThisButtonWasPressed(buttonToCheck as integer)
 							
 									PlaySoundEffect(1)
 									GUIchanged = TRUE
-									SetDelayAllUserInput()
+									SetDelayAllUserInput(14)
 								endif
 							next index
 						endif
@@ -390,7 +402,7 @@ function ThisArrowWasPressed(arrowToCheck as float)
 	index as integer
 	index = floor(arrowToCheck)
 
-	if index = arrowToCheck and ArrowSetLeftAnimationTimer[index] > 0
+	if ArrowSetLeftAnimationTimer[index] > 0
 		if ArrowSetLeftAnimationTimer[index] = 3
 			ArrowSetLeftScale[index] = .75
 			GUIchanged = TRUE
@@ -411,7 +423,7 @@ function ThisArrowWasPressed(arrowToCheck as float)
 		exitfunction returnValue
 	endif
 
-	if (index + .5) = arrowToCheck and ArrowSetRightAnimationTimer[index] > 0
+	if ArrowSetRightAnimationTimer[index] > 0
 		if ArrowSetRightAnimationTimer[index] = 3
 			ArrowSetRightScale[index] = .75
 			GUIchanged = TRUE
@@ -444,7 +456,7 @@ function ThisArrowWasPressed(arrowToCheck as float)
 				
 					PlaySoundEffect(0)
 					GUIchanged = TRUE
-					SetDelayAllUserInput()
+					SetDelayAllUserInput(14)
 				elseif JoystickDirection = JoyDOWN
 					if ArrowSetSelectedByKeyboard < (NumberOfArrowSetsOnScreen-1)
 						inc ArrowSetSelectedByKeyboard, 1
@@ -454,7 +466,7 @@ function ThisArrowWasPressed(arrowToCheck as float)
 				
 					PlaySoundEffect(0)
 					GUIchanged = TRUE
-					SetDelayAllUserInput()
+					SetDelayAllUserInput(14)
 				endif
 			endif
 
@@ -462,12 +474,12 @@ function ThisArrowWasPressed(arrowToCheck as float)
 				ArrowSetLeftAnimationTimer[ArrowSetSelectedByKeyboard] = 3
 				PlaySoundEffect(1)
 				GUIchanged = TRUE
-				SetDelayAllUserInput()
+				SetDelayAllUserInput(14)
 			elseif JoystickDirection = JoyRIGHT
 				ArrowSetRightAnimationTimer[ArrowSetSelectedByKeyboard] = 3
 				PlaySoundEffect(1)
 				GUIchanged = TRUE
-				SetDelayAllUserInput()
+				SetDelayAllUserInput(14)
 			endif
 		endif
 
@@ -482,13 +494,13 @@ function ThisArrowWasPressed(arrowToCheck as float)
 					ArrowSetLeftAnimationTimer[ArrowSetSelectedByKeyboard] = 3
 					PlaySoundEffect(1)
 					GUIchanged = TRUE
-					SetDelayAllUserInput()
+					SetDelayAllUserInput(14)
 				elseif (  ( MouseScreenY > (ArrowSetScreenY[index]-arrowHeightHalf) ) && ( MouseScreenY < (ArrowSetScreenY[index]+arrowHeightHalf) ) && ( MouseScreenX > ((ScreenWidth/2)+154-arrowWidthHalf) ) && ( MouseScreenX < ((ScreenWidth/2)+154+arrowWidthHalf) )  )
 					ArrowSetSelectedByKeyboard = index
 					ArrowSetRightAnimationTimer[ArrowSetSelectedByKeyboard] = 3
 					PlaySoundEffect(1)
 					GUIchanged = TRUE
-					SetDelayAllUserInput()
+					SetDelayAllUserInput(14)
 				endif
 			next index
 		endif
@@ -628,6 +640,16 @@ endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
+function DeleteCharacterIconTexts ( )
+index as integer
+
+	for index = 8 to 76
+
+	next index
+endfunction
+
+//------------------------------------------------------------------------------------------------------------
+
 function CreateIcon(spriteIndex as integer, screenX as integer, screenY as integer)
 	IconIndex[NumberOfIconsOnScreen] = NumberOfIconsOnScreen
 	IconSprite[NumberOfIconsOnScreen] = spriteIndex
@@ -638,8 +660,6 @@ function CreateIcon(spriteIndex as integer, screenX as integer, screenY as integ
 
 	inc NumberOfIconsOnScreen, 1
 	GUIchanged = TRUE
-
-	CurrentIconBeingPressed = -1
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -728,7 +748,9 @@ endfunction
 
 function ThisIconWasPressed(iconIndexToCheck as integer)
 	if (NumberOfIconsOnScreen = 0) then exitfunction(-1)
-
+	
+	if (DelayAllUserInput > 0) then exitfunction(-1)
+	
 	returnValue as integer
 	returnValue = FALSE
 
@@ -748,6 +770,8 @@ function ThisIconWasPressed(iconIndexToCheck as integer)
 					dec IconAnimationTimer[index], 1
 				elseif IconAnimationTimer[index] = 1
 					if iconIndexToCheck = IconIndex[index] then returnValue = TRUE
+
+					PlaySoundEffect(1)
 
 					CurrentIconBeingPressed = -1
 
@@ -770,18 +794,11 @@ function ThisIconWasPressed(iconIndexToCheck as integer)
 					if (  ( MouseScreenY > (IconScreenY[index]-iconHeightHalf) ) and ( MouseScreenY < (IconScreenY[index]+iconHeightHalf) ) and ( MouseScreenX > (IconScreenX[index]-iconWidthHalf) ) and ( MouseScreenX < (IconScreenX[index]+iconWidthHalf) )  )
 						IconAnimationTimer[index] = 2
 				
-						if (IconSprite[index] = 80)
-							
-						elseif (IconSprite[index] = 81)
-						
-						else
-							PlaySoundEffect(1)
-						endif
 						GUIchanged = TRUE
 						
 						CurrentIconBeingPressed = index
 						
-						SetDelayAllUserInput()
+						SetDelayAllUserInput(14)
 					endif
 				next index
 			endif
@@ -845,7 +862,7 @@ function ThisIconWasPressedAndroid(iconIndexToCheck as integer)
 
 			PlaySoundEffect(1)
 			GUIchanged = TRUE
-			SetDelayAllUserInput()
+			SetDelayAllUserInput(14)
 			
 			NameInputCharSpriteChar = 999
 		endif
@@ -867,6 +884,8 @@ function DestroyAllIcons()
 		IconScale[index] = 1
 		IconText[index] = " "	
 	next index
+	
+	CurrentIconBeingPressed = -1
 endfunction
 
 //------------------------------------------------------------------------------------------------------------

@@ -3,16 +3,16 @@
 function ClearHighScores( )
 	mode as integer
 	for mode = 0 to 5
-		HighScoreName [ mode, 0 ] = "The Fallen Angel"
-		HighScoreName [ mode, 1 ] = "John B."
-		HighScoreName [ mode, 2 ] = "Denise T."
-		HighScoreName [ mode, 3 ] = "Mike Q."
-		HighScoreName [ mode, 4 ] = "Carl D."
-		HighScoreName [ mode, 5 ] = "Daotheman"
-		HighScoreName [ mode, 6 ] = "theweirdn8"
-		HighScoreName [ mode, 7 ] = "mattmatteh"
-		HighScoreName [ mode, 8 ] = "Oshi Bobo"
-		HighScoreName [ mode, 9 ] = "AppGameKit v2"
+		HighScoreName [ mode, 0 ] = "JeZxLee"
+		HighScoreName [ mode, 1 ] = "Merkredy"
+		HighScoreName [ mode, 2 ] = "John B."
+		HighScoreName [ mode, 3 ] = "Denise T."
+		HighScoreName [ mode, 4 ] = "Mike Q."
+		HighScoreName [ mode, 5 ] = "Carl D."
+		HighScoreName [ mode, 6 ] = "Daotheman"
+		HighScoreName [ mode, 7 ] = "theweirdn8"
+		HighScoreName [ mode, 8 ] = "mattmatteh"
+		HighScoreName [ mode, 9 ] = "Oshi Bobo"
 		
 		HighScoreLevel [ mode, 0 ] = 10
 		HighScoreLevel [ mode, 1 ] = 9
@@ -68,15 +68,15 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function LoadOptionsAndHighScores ( )
+	index as integer
 	if (Platform <> Web)
-		index as integer
 		if GetFileExists( DataVersion ) = 0
 		else
 			OpenToRead(1, DataVersion)
 				MusicVolume = readInteger( 1 )
 				EffectsVolume = readInteger( 1 )
 				GameMode = readInteger( 1 )
-				PlayingSyncRate = readInteger( 1 )
+				SelectedBackground = readInteger( 1 )
 				
 				for index = 0 to 5
 					LevelSkip[index] = ReadInteger( 1 )
@@ -97,7 +97,7 @@ function LoadOptionsAndHighScores ( )
 				next mode
 			CloseFile ( 1 )
 		endif
-	else		
+	else
 		currentToken as integer
 		currentToken = 1
 		maxTokens as integer
@@ -111,7 +111,7 @@ function LoadOptionsAndHighScores ( )
 			inc currentToken, 1
 			GameMode = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
 			inc currentToken, 1
-			PlayingSyncRate = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
+			SelectedBackground = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
 			inc currentToken, 1
 
 			for index = 0 to 5
@@ -141,13 +141,13 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function SaveOptionsAndHighScores ( )
+	index as integer
 	if (Platform <> Web)
-		index as integer
 		OpenToWrite( 1 , DataVersion )
 			WriteInteger ( 1, MusicVolume )
 			WriteInteger ( 1, EffectsVolume )
 			WriteInteger ( 1, GameMode )
-			WriteInteger ( 1, PlayingSyncRate )
+			WriteInteger ( 1, SelectedBackground )
 				
 			for index = 0 to 5
 				WriteInteger ( 1, LevelSkip[index] )
@@ -177,7 +177,7 @@ function SaveOptionsAndHighScores ( )
 		optionsScoresString = optionsScoresString+'*'
 		optionsScoresString = optionsScoresString+str(GameMode)
 		optionsScoresString = optionsScoresString+'*'
-		optionsScoresString = optionsScoresString+str(PlayingSyncRate)
+		optionsScoresString = optionsScoresString+str(SelectedBackground)
 		optionsScoresString = optionsScoresString+'*'
 		
 		for index = 0 to 5
