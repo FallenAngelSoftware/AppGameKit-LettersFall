@@ -68,15 +68,15 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function LoadOptionsAndHighScores ( )
-	index as integer
 	if (Platform <> Web)
+		index as integer
 		if GetFileExists( DataVersion ) = 0
 		else
 			OpenToRead(1, DataVersion)
 				MusicVolume = readInteger( 1 )
 				EffectsVolume = readInteger( 1 )
 				GameMode = readInteger( 1 )
-				SelectedBackground = readInteger( 1 )
+				PlayingSyncRate = readInteger( 1 )
 				
 				for index = 0 to 5
 					LevelSkip[index] = ReadInteger( 1 )
@@ -97,7 +97,7 @@ function LoadOptionsAndHighScores ( )
 				next mode
 			CloseFile ( 1 )
 		endif
-	else
+	else		
 		currentToken as integer
 		currentToken = 1
 		maxTokens as integer
@@ -111,7 +111,7 @@ function LoadOptionsAndHighScores ( )
 			inc currentToken, 1
 			GameMode = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
 			inc currentToken, 1
-			SelectedBackground = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
+			PlayingSyncRate = Val(  GetStringToken( cookieValue, "*", (currentToken) )  )
 			inc currentToken, 1
 
 			for index = 0 to 5
@@ -141,13 +141,13 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function SaveOptionsAndHighScores ( )
-	index as integer
 	if (Platform <> Web)
+		index as integer
 		OpenToWrite( 1 , DataVersion )
 			WriteInteger ( 1, MusicVolume )
 			WriteInteger ( 1, EffectsVolume )
 			WriteInteger ( 1, GameMode )
-			WriteInteger ( 1, SelectedBackground )
+			WriteInteger ( 1, PlayingSyncRate )
 				
 			for index = 0 to 5
 				WriteInteger ( 1, LevelSkip[index] )
@@ -177,7 +177,7 @@ function SaveOptionsAndHighScores ( )
 		optionsScoresString = optionsScoresString+'*'
 		optionsScoresString = optionsScoresString+str(GameMode)
 		optionsScoresString = optionsScoresString+'*'
-		optionsScoresString = optionsScoresString+str(SelectedBackground)
+		optionsScoresString = optionsScoresString+str(PlayingSyncRate)
 		optionsScoresString = optionsScoresString+'*'
 		
 		for index = 0 to 5
