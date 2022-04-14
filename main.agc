@@ -2,8 +2,28 @@
 
 remstart
 ---------------------------------------------------------------------------------------------------
+
+    Copyright 2022 Team "www.FallenAngelSoftware.com"
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or
+    substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+    AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---------------------------------------------------------------------------------------------------
+
                                            JeZxLee's
-                                  Open-Source / Cross-Platform    TM
+                              M.I.T. Open-Source / Cross-Platform
                              AppGameKit Studio "NightRider" Engine
                                         (Version 2.0.0)
    _              _     _                         _____          _   _     _   _    ___    _  __TM
@@ -12,7 +32,7 @@ remstart
   | |___  |  __/ | |_  | |_  |  __/ | |    \__ \ |  _|  | (_| | | | | |   | | | | | |_| |  / /_
   |_____|  \___|  \__|  \__|  \___| |_|    |___/ |_|     \__,_| |_| |_|   |_| |_|  \___/  /_/(_)
 
-                                     Retail3 110% - v6.3.5              "Turbo!"
+                                   Retail3 110% - v6.3.5(WIP)              "Turbo!"
                                            S T E A M
 ---------------------------------------------------------------------------------------------------     
 
@@ -57,14 +77,6 @@ global ScreenHeight = 640
 global ExitGame as integer
 ExitGame = 0
 
-SetWindowTitle( "LettersFall 110%[TM]" )
-SetWindowSize( ScreenWidth, ScreenHeight, 0 )
-SetWindowAllowResize( 1 )
-
-SetScreenResolution( ScreenWidth, ScreenHeight ) 
-SetVirtualResolution( ScreenWidth, ScreenHeight )
-SetOrientationAllowed( 1, 0, 0, 0 )
-
 #constant FALSE		0
 #constant TRUE		1
 
@@ -84,14 +96,25 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 	endif
 
 	SetImmersiveMode(1) 
-
 	SetSyncRate( 30, 0 )
-	SetScissor( 0,0,0,0 )
-	SetVirtualResolution( ScreenWidth, ScreenHeight) //+40 )
+//	SetDisplayAspect(-1)
+	SetScreenResolution( GetScreenBoundsRight(),GetScreenBoundsBottom() )//ScreenWidth, ScreenHeight ) 
+	SetVirtualResolution( ScreenWidth, ScreenHeight )
+	SetOrientationAllowed( 1, 0, 0, 0 )
+//	SetScissor( GetScreenBoundsLeft(),GetScreenBoundsTop(),GetScreenBoundsRight(),GetScreenBoundsBottom() )
+					
 	OnMobile = TRUE
 	ShowCursor = FALSE	
 else
 	Platform = Web
+
+	SetWindowTitle( "LettersFall 110%[TM]" )
+	SetWindowSize( ScreenWidth, ScreenHeight, 0 )
+	SetWindowAllowResize( 1 )
+
+	SetScreenResolution( ScreenWidth, ScreenHeight ) 
+	SetVirtualResolution( ScreenWidth, ScreenHeight )
+			
 	SetVSync( 1 )
 	SetScissor( 0, 0, ScreenWidth, ScreenHeight )
 	OnMobile = FALSE
@@ -207,6 +230,7 @@ ScreenFadeTransparency = 255
 global BlackBG as integer
 global FadingBlackBG as integer
 LoadImage ( 1, "\media\images\backgrounds\FadingBlackBG.png" )
+LoadImage ( 2, "\media\images\backgrounds\FAS_ScreenBG.png" )
 FadingBlackBG = CreateSprite ( 1 )
 SetSpriteDepth ( FadingBlackBG, 1 )
 SetSpriteOffset( FadingBlackBG, (GetSpriteWidth(FadingBlackBG)/2) , (GetSpriteHeight(FadingBlackBG)/2) ) 
@@ -268,8 +292,9 @@ PauseGame = FALSE
 #constant NewHighScoreNameInputScreen					11
 #constant NewHighScoreNameInputAndroidScreen			12
 #constant MusicPlayerScreen							13
-global ScreenToDisplay = 3
-if (OnMobile = FALSE) then ScreenToDisplay = 0
+#constant ExitScreen									14
+global ScreenToDisplay = 0//3
+//if (OnMobile = FALSE) then ScreenToDisplay = 0
 global NextScreenToDisplay = 1
 global ScreenDisplayTimer = 0
 
@@ -368,6 +393,8 @@ LoadImage ( 45, "\media\images\playing\CheckWordSmaller.png" )
 
 LoadImage ( 50, "\media\images\gui\BombLeft.png" )
 LoadImage ( 51, "\media\images\gui\BombRight.png" )
+LoadImage ( 99998, "\media\images\gui\GetSource.png" )
+LoadImage ( 99999, "\media\images\gui\GetAppGameKit.png" )
 
 global IconIndex as integer[100]
 global IconSprite as integer[100]
@@ -633,7 +660,7 @@ global FrameSkip as integer
 
 global QuitGame as integer
 
-if (OnMobile = TRUE) then  PlayNewMusic(0, 1)
+//if (OnMobile = TRUE) then  PlayNewMusic(0, 1)
 
 global CurrentIconBeingPressed as integer
 CurrentIconBeingPressed = -1
@@ -705,6 +732,10 @@ do
 		case MusicPlayerScreen:
 			DisplayMusicPlayerScreen()
 		endcase
+
+		case ExitScreen:
+			DisplayExitScreen()
+		endcase
 	endselect
 
 	if (GUIchanged = TRUE or ScreenToDisplay = NewHighScoreNameInputAndroidScreen)
@@ -765,10 +796,7 @@ do
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
 		Print ( "FPS="+str(roundedFPS) )
 		print (  "Sprite(s): "+str( GetManagedSpriteCount() )  )
-		print ( Platform )
-//		print ( "GamePaused:"+str(GamePaused) )
-//		print ( "PauseStat:"+str(GamePausedStatus) )
-//		print ( "IconPressed:"+str(CurrentIconBeingPressed) )
+		print ( "CurIconPress:"+str(CurrentIconBeingPressed) )
 		print ( "LastKeyboardChar:"+str(LastKeyboardChar) )
 		print ( "LaskKeyboardKey:"+str(LaskKeyboardKey) )
 	endif

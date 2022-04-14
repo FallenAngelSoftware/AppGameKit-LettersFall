@@ -1,5 +1,28 @@
 // "interface.agc"...
 
+remstart
+---------------------------------------------------------------------------------------------------
+
+    Copyright 2022 Team "www.FallenAngelSoftware.com"
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or
+    substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+    AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---------------------------------------------------------------------------------------------------
+remend
+
 function LoadInterfaceSprites()
 	LeftArrow = CreateSprite ( 100 )
 	SetSpriteDepth ( LeftArrow, 3 )
@@ -93,6 +116,16 @@ function LoadInterfaceSprites()
 	SetSpriteDepth ( Icon[84], 2 )
 	SetSpriteOffset( Icon[84], (GetSpriteWidth(Icon[84])/2) , (GetSpriteHeight(Icon[84])/2) ) 
 	SetSpritePositionByOffset( Icon[84], -9999, -9999 )
+
+	Icon[98] = CreateSprite ( 99998 )
+	SetSpriteDepth ( Icon[98], 2 )
+	SetSpriteOffset( Icon[98], (GetSpriteWidth(Icon[98])/2) , (GetSpriteHeight(Icon[98])/2) ) 
+	SetSpritePositionByOffset( Icon[98], -9999, -9999 )
+
+	Icon[99] = CreateSprite ( 99999 )
+	SetSpriteDepth ( Icon[99], 2 )
+	SetSpriteOffset( Icon[99], (GetSpriteWidth(Icon[99])/2) , (GetSpriteHeight(Icon[99])/2) ) 
+	SetSpritePositionByOffset( Icon[99], -9999, -9999 )
 
 	NameInputCharSprite = CreateSprite ( 130 )
 	SetSpriteDepth ( NameInputCharSprite, 3 )
@@ -749,8 +782,6 @@ endfunction
 function ThisIconWasPressed(iconIndexToCheck as integer)
 	if (NumberOfIconsOnScreen = 0) then exitfunction(-1)
 	
-	if (DelayAllUserInput > 0) then exitfunction(-1)
-	
 	returnValue as integer
 	returnValue = FALSE
 
@@ -786,19 +817,21 @@ function ThisIconWasPressed(iconIndexToCheck as integer)
 	if (CurrentIconBeingPressed = -1)
 		if DelayAllUserInput = 0
 			if MouseButtonLeft = ON
-			for index = 0 to (NumberOfIconsOnScreen-1)
-					iconWidthHalf as integer
-					iconWidthHalf = GetSpriteWidth(Icon[IconSprite[index]])/2
-					iconHeightHalf as integer
-					iconHeightHalf = GetSpriteHeight(Icon[IconSprite[index]])/2
-					if (  ( MouseScreenY > (IconScreenY[index]-iconHeightHalf) ) and ( MouseScreenY < (IconScreenY[index]+iconHeightHalf) ) and ( MouseScreenX > (IconScreenX[index]-iconWidthHalf) ) and ( MouseScreenX < (IconScreenX[index]+iconWidthHalf) )  )
-						IconAnimationTimer[index] = 2
-				
-						GUIchanged = TRUE
-						
-						CurrentIconBeingPressed = index
-						
-						SetDelayAllUserInput(14)
+				for index = 0 to (NumberOfIconsOnScreen-1)
+					if IconIndex[index] = iconIndexToCheck
+						iconWidthHalf as integer
+						iconWidthHalf = GetSpriteWidth(Icon[IconSprite[index]])/2
+						iconHeightHalf as integer
+						iconHeightHalf = GetSpriteHeight(Icon[IconSprite[index]])/2
+						if (  ( MouseScreenY > (IconScreenY[index]-iconHeightHalf) ) and ( MouseScreenY < (IconScreenY[index]+iconHeightHalf) ) and ( MouseScreenX > (IconScreenX[index]-iconWidthHalf) ) and ( MouseScreenX < (IconScreenX[index]+iconWidthHalf) )  )
+							IconAnimationTimer[index] = 2
+					
+							GUIchanged = TRUE
+							
+							CurrentIconBeingPressed = index
+							
+							SetDelayAllUserInput(14)
+						endif
 					endif
 				next index
 			endif

@@ -1,5 +1,28 @@
 // "visuals.agc"...
 
+remstart
+---------------------------------------------------------------------------------------------------
+
+    Copyright 2022 Team "www.FallenAngelSoftware.com"
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or
+    substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+    AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---------------------------------------------------------------------------------------------------
+remend
+
 function ClearScreenWithColor ( red as integer, green as integer, blue as integer )
 	SetClearColor( red, green, blue ) 
 	ClearScreen()
@@ -50,7 +73,7 @@ function LoadAboutScreenTexts ( )
 	AddAboutScreenText("The ''NightRider'' Engine[TM]", 255)
 	AddAboutScreenText("''JeZxLee''", 255)
 	
-	AddAboutScreenText("Lead Game Designers:", 0)
+	AddAboutScreenText("Lead Game Designer:", 0)
 	AddAboutScreenText("''JeZxLee''", 255)
 	
 	AddAboutScreenText("Lead Game Programmer:", 0)
@@ -64,6 +87,8 @@ function LoadAboutScreenTexts ( )
 	AddAboutScreenText("''fogobogo''", 255)
 	AddAboutScreenText("''qeed''", 255)
 	AddAboutScreenText("''Nintendo''", 255)
+	AddAboutScreenText("''ilynxi1''", 255)
+	AddAboutScreenText("''bamberbiz''", 255)
 
 	AddAboutScreenText("Game Story Artwork By:", 0)
 	AddAboutScreenText("''Dahlia Wilder''", 255)
@@ -90,7 +115,10 @@ function LoadAboutScreenTexts ( )
 	AddAboutScreenText("''NoCopyrightSounds''", 255)
 	AddAboutScreenText("(www.YouTube.com)", 255)
 	AddAboutScreenText("Free No Copyright Music", 255)
-	
+
+	AddAboutScreenText("Musics Compiled & Edited By:", 0)
+	AddAboutScreenText("''D.J. Fading Twilight''", 255)
+			
 	AddAboutScreenText("Support Music Artists:", 0)
 	AddAboutScreenText("''John Baxter''", 255)
 	AddAboutScreenText("(www.JohnBaxterMusic.com)", 255)

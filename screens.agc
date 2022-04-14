@@ -1,5 +1,28 @@
 // "screens.agc"...
 
+remstart
+---------------------------------------------------------------------------------------------------
+
+    Copyright 2022 Team "www.FallenAngelSoftware.com"
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or
+    substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+    AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---------------------------------------------------------------------------------------------------
+remend
+
 function SetDelayAllUserInput ( delay as integer )
 	DelayAllUserInput = delay
 endfunction
@@ -117,9 +140,14 @@ function DisplaySteamOverlayScreen( )
 		SetText( LoadPercentText, str(LoadPercentFixed)+"%" )
 
 		dec ScreenDisplayTimer, 1
-		if (ScreenDisplayTimer = 0) then  SetTextStringOutlined ( ClickToContinueText, "CLICK Screen To Continue!" )
+		if (ScreenDisplayTimer = 0) then SetTextStringOutlined ( ClickToContinueText, "CLICK Screen To Continue!" )
 	elseif ScreenDisplayTimer = 0
-		if (MouseButtonLeft = ON) then  ScreenFadeStatus = FadingToBlack
+		if (MouseButtonLeft = ON)
+			PlaySoundEffect(1)
+			ScreenFadeStatus = FadingToBlack
+			ScreenDisplayTimer = -1
+			SetDelayAllUserInput(50)
+		endif
 		SetText( LoadPercentText, "100%" )
 	endif
 
@@ -146,8 +174,6 @@ function DisplayAppGameKitScreen( )
 		SetSpriteOffset( AppGameKitLogo, (GetSpriteWidth(AppGameKitLogo)/2) , (GetSpriteHeight(AppGameKitLogo)/2) ) 
 		SetSpritePositionByOffset( AppGameKitLogo, ScreenWidth/2, (ScreenHeight/2) )
 		
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "www.AppGameKit.com", 999, 40, 255, 255, 255, 255, 171, 0, 62, 1, ScreenWidth/2, ScreenHeight-40, 3)
-		
 		ScreenDisplayTimer = 200
 		NextScreenToDisplay = SixteenBitSoftScreen
 
@@ -162,7 +188,7 @@ function DisplayAppGameKitScreen( )
 	
 	if ScreenDisplayTimer > 0
 		if MouseButtonLeft = ON or LastKeyboardChar = 32 or LastKeyboardChar = 13 or LastKeyboardChar = 27
-			PlaySoundEffect(0)
+			PlaySoundEffect(1)
 			SetDelayAllUserInput(14)
 			ScreenDisplayTimer = 0
 		endif
@@ -178,24 +204,20 @@ function DisplaySixteenBitSoftScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 		ClearScreenWithColor ( 0, 0, 0 )
 		
-		BlackBG = CreateSprite ( 1 )
+		BlackBG = CreateSprite ( 2 )
 		SetSpriteDepth ( BlackBG, 4 )
 		SetSpriteOffset( BlackBG, (GetSpriteWidth(BlackBG)/2) , (GetSpriteHeight(BlackBG)/2) ) 
 		SetSpritePositionByOffset( BlackBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "Fallen Angel Software", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, 22, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Fallen Angel Software", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22, 3)
 
-		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "Presents:", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, 22+30, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Presents:", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22+30+110, 3)
 
-		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "A ''JeZxLee'' Game", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, 22+30+30, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "A", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, (ScreenHeight/2)-15-35, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''JeZxLee''", 999, 50, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, (ScreenHeight/2)-15, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Game", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, (ScreenHeight/2)-15+35, 3)
 
-		SixteenBitSoftLogo = CreateSprite ( 30 )
-		SetSpriteDepth ( SixteenBitSoftLogo, 3 )
-		SetSpriteOffset( SixteenBitSoftLogo, (GetSpriteWidth(SixteenBitSoftLogo)/2) , (GetSpriteHeight(SixteenBitSoftLogo)/2) ) 
-		SetSpriteScaleByOffset( SixteenBitSoftLogo, .65, .65 )
-		SetSpritePositionByOffset( SixteenBitSoftLogo, ScreenWidth/2, ScreenHeight/2 )
-
-		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, ScreenHeight-22, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, ScreenHeight-22, 3)
 		
 		ScreenDisplayTimer = 200
 		NextScreenToDisplay = TitleScreen
@@ -217,7 +239,7 @@ function DisplaySixteenBitSoftScreen( )
 		
 		if ScreenDisplayTimer > 0
 			if MouseButtonLeft = ON or LastKeyboardChar = 32 or LastKeyboardChar = 13 or LastKeyboardChar = 27
-				PlaySoundEffect(0)
+				PlaySoundEffect(1)
 				SetDelayAllUserInput(14)
 				ScreenDisplayTimer = 0
 			endif
@@ -352,12 +374,15 @@ function DisplayTitleScreen( )
 			ScreenFadeStatus = FadingToBlack
 		elseif ThisButtonWasPressed(5) = TRUE
 		if (OnMobile = FALSE)
-			if Platform = Web
-				OpenBrowser( "https://fallenangelsoftware.com" )
-			else
-				ExitGame = 1
+//			if Platform = Web
+//				OpenBrowser( "https://fallenangelsoftware.com" )
+//			else
+//				ExitGame = 1
+				SetDelayAllUserInput(5)
+				NextScreenToDisplay = ExitScreen
+				ScreenFadeStatus = FadingToBlack
 			endif
-		endif
+//		endif
 		endif
 	endif
 
@@ -845,7 +870,6 @@ function DisplayHowToPlayScreen( )
 		ArrowIconAnimationStep = 0
 		ArrowIconAnimationDelay = 0
 
-
 		HowToPlayLetters = CreateSprite ( 26 )
 		SetSpriteOffset( HowToPlayLetters, (GetSpriteWidth(HowToPlayLetters)/2) , (GetSpriteHeight(HowToPlayLetters)/2) ) 
 		SetSpritePositionByOffset( HowToPlayLetters, 148, 484 )
@@ -872,19 +896,19 @@ function DisplayHowToPlayScreen( )
 		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 3)
 		SetSpritePositionByOffset( ArrowIconSprite, 174, 413 )
-		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+20, 484+20 ) 
+		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+22, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 4)
 		SetSpritePositionByOffset( ArrowIconSprite, 213, 391 )
-		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+20+20, 484+20 ) 
+		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+22+20, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 5)
 		SetSpritePositionByOffset( ArrowIconSprite, 233, 432 )
-		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+20+20+20, 484+20 ) 
+		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+22+20+20, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 6)
 		SetSpritePositionByOffset( ArrowIconSprite, 254, 451 )
-		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+20+20+20+20, 484+20 ) 
+		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+22+20+20+20, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 7)
 		SetSpritePositionByOffset( ArrowIconSprite, 294, 390 )
-		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+20+20+20+20+20+2, 484+20 ) 
+		SetSpriteScissor( HowToPlayLetters, 67, 484-20, 67+20+20+20+22+20+20+20+20+2, 484+20 ) 
 	elseif (ArrowIconAnimationStep = 8)
 		SetSpritePositionByOffset( ArrowIconSprite, 196, 527 )
 	endif
@@ -1131,11 +1155,11 @@ function DisplayAboutScreen( )
 		SetViewOffset( 0, 0 )
 		if (WonGame = TRUE)
 			if (PlayerRankOnGameOver < 10)
-//				if (OnMobile = TRUE)
+				if (OnMobile = TRUE)
 					NextScreenToDisplay = NewHighScoreNameInputAndroidScreen
-//				else
-//					NextScreenToDisplay = NewHighScoreNameInputScreen
-//				endif
+				else
+					NextScreenToDisplay = NewHighScoreNameInputScreen
+				endif
 			else	
 				NextScreenToDisplay = HighScoresScreen
 			endif
@@ -1490,7 +1514,7 @@ indexX as integer
 					ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 				endif
 			endif		
-		elseif (ThisIconWasPressed(1) = TRUE or ThisIconWasPressed(4) = true)
+		elseif (ThisIconWasPressed(1) = TRUE)
 			QuitGame = TRUE
 			NextScreenToDisplay = TitleScreen
 			PlayNewMusic(0, 1)
@@ -1668,11 +1692,11 @@ indexX as integer
 					if (WonGame = FALSE)
 						if (PlayerRankOnGameOver < 10)
 							PlayNewMusic(7, 1)
-//							if (OnMobile = TRUE)
+							if (OnMobile = TRUE)
 								NextScreenToDisplay = NewHighScoreNameInputAndroidScreen
-//							else
-//								NextScreenToDisplay = NewHighScoreNameInputScreen
-//							endif
+							else
+								NextScreenToDisplay = NewHighScoreNameInputScreen
+							endif
 						else	
 							NextScreenToDisplay = HighScoresScreen
 							PlayNewMusic(0, 1)
@@ -1795,7 +1819,7 @@ function DisplayNewHighScoreNameInputScreen ( )
 	endif
 
 	for index = 0 to 63
-		if ThisIconWasPressed(index) and CurrentKeyboardKeyPressed = -1
+		if ThisIconWasPressed(index) and CurrentKeyboardKeyPressed = -1 and NewHighScoreNameIndex < 9
 			inc NewHighScoreNameIndex, 1
 			NewHighScoreCurrentName = NewHighScoreCurrentName + IconText[10+index]
 		endif
@@ -2185,5 +2209,55 @@ function DisplayFiveSceneScreen( )
 
 	if ScreenFadeStatus = FadingToBlack and ScreenFadeTransparency = 254
 		PlayNewMusic(3, 1)
+	endif
+endfunction
+
+//------------------------------------------------------------------------------------------------------------
+
+function DisplayExitScreen( )
+	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
+		ClearScreenWithColor ( 0, 0, 0 )
+
+		if CurrentlyPlayingMusicIndex > -1 then StopMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
+		
+		BlackBG = CreateSprite ( 2 )
+		SetSpriteDepth ( BlackBG, 4 )
+		SetSpriteOffset( BlackBG, (GetSpriteWidth(BlackBG)/2) , (GetSpriteHeight(BlackBG)/2) ) 
+		SetSpritePositionByOffset( BlackBG, ScreenWidth/2, ScreenHeight/2 )
+
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "This Game Is M.I.T. Open-Source!", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22, 3)
+
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Click The Icons Below", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22+30, 3)
+
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "To Get The Free Source Code", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22+30+30, 3)
+
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "& The AppGameKit Game Engine:", 999, 25, 0, 0, 0, 255, 220, 220, 220, 1, ScreenWidth/2, 22+30+30+30, 3)
+
+		CreateIcon( 98, (ScreenWidth / 2), (ScreenHeight/2)-110+40 )
+		CreateIcon( 99, (ScreenWidth / 2), (ScreenHeight/2)+110+40 )
+
+		CreateButton( 5, (ScreenWidth / 2), (ScreenHeight-40+15) )
+
+		ScreenIsDirty = TRUE
+	endif
+
+	if ThisButtonWasPressed(5) = TRUE
+		if Platform = Web
+			OpenBrowser( "https://fallenangelsoftware.com" )
+		else
+			ExitGame = 1
+		endif
+	endif
+
+	if ThisIconWasPressed(0) = TRUE
+		OpenBrowser( "https://github.com/FallenAngelSoftware/AppGameKit-LettersFall" )
+	endif
+
+	if ThisIconWasPressed(1) = TRUE
+		OpenBrowser( "https://store.steampowered.com/app/1024640/AppGameKit_Studio/" )
+	endif
+
+	if ScreenFadeStatus = FadingToBlack and ScreenFadeTransparency = 254
+		
 	endif
 endfunction
