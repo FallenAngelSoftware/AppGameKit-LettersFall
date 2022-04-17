@@ -81,7 +81,10 @@ function LoadAboutScreenTexts ( )
 	
 	AddAboutScreenText("Lead Game Tester:", 0)
 	AddAboutScreenText("''JeZxLee''", 255)
-	
+
+	AddAboutScreenText("Android Mobile Full Screen By:", 0)
+	AddAboutScreenText("''hendron''", 255)
+
 	AddAboutScreenText("Support Game Testers:", 0)
 	AddAboutScreenText("''Mike Quatro''", 255)
 	AddAboutScreenText("''fogobogo''", 255)

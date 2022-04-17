@@ -58,11 +58,11 @@ remend
 global DictionaryLetterLoading as integer
 
 global GameVersion as string
-GameVersion = "''Retail3 110% - Turbo! - v6.3.5(WIP)''"
+GameVersion = "''Retail3 110% - Turbo! - v6.3.7(WIP)''"
 global DataVersion as string
-DataVersion = "LF110-Retail3-110-Turbo-v6_3_5.cfg"
+DataVersion = "LF110-Retail3-110-Turbo-v6_3_7.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "LF6-v6_3_5-"
+HTML5DataVersion = "LF6-v6_3_7-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -97,11 +97,7 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 
 	SetImmersiveMode(1) 
 	SetSyncRate( 30, 0 )
-//	SetDisplayAspect(-1)
-	SetScreenResolution( GetScreenBoundsRight(),GetScreenBoundsBottom() )//ScreenWidth, ScreenHeight ) 
-	SetVirtualResolution( ScreenWidth, ScreenHeight )
 	SetOrientationAllowed( 1, 0, 0, 0 )
-//	SetScissor( GetScreenBoundsLeft(),GetScreenBoundsTop(),GetScreenBoundsRight(),GetScreenBoundsBottom() )
 					
 	OnMobile = TRUE
 	ShowCursor = FALSE	
@@ -293,8 +289,8 @@ PauseGame = FALSE
 #constant NewHighScoreNameInputAndroidScreen			12
 #constant MusicPlayerScreen							13
 #constant ExitScreen									14
-global ScreenToDisplay = 0//3
-//if (OnMobile = FALSE) then ScreenToDisplay = 0
+global ScreenToDisplay = 0
+
 global NextScreenToDisplay = 1
 global ScreenDisplayTimer = 0
 
@@ -660,7 +656,7 @@ global FrameSkip as integer
 
 global QuitGame as integer
 
-//if (OnMobile = TRUE) then  PlayNewMusic(0, 1)
+if (OnMobile = TRUE) then  PlayNewMusic(0, 1)
 
 global CurrentIconBeingPressed as integer
 CurrentIconBeingPressed = -1
@@ -670,6 +666,9 @@ CurrentKeyboardKeyPressed = -1
 global multiplier as float
 
 global GamePausedStatus as integer
+
+global renderImage
+global renderSprite
 
 do
 	inc FrameCount, 1
@@ -770,7 +769,7 @@ do
 			if (ScreenToDisplay = AboutScreen)
 				SetSpritePositionByOffset( FadingBlackBG,  -80+30, AboutScreenFPSY )
 			else
-				SetSpritePositionByOffset( FadingBlackBG,  -80+30, -200 )
+				SetSpritePositionByOffset( FadingBlackBG,  -80+30, -170 )
 			endif			
 			SetSpriteColorAlpha( FadingBlackBG, 200 )
 		else
@@ -796,13 +795,41 @@ do
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
 		Print ( "FPS="+str(roundedFPS) )
 		print (  "Sprite(s): "+str( GetManagedSpriteCount() )  )
-		print ( "CurIconPress:"+str(CurrentIconBeingPressed) )
-		print ( "LastKeyboardChar:"+str(LastKeyboardChar) )
-		print ( "LaskKeyboardKey:"+str(LaskKeyboardKey) )
+		print ( "ScrX:"+str(MouseScreenX) )
+		print ( "ScrY:"+str(MouseScreenY) )
+		print (  "TouchX:"+str( GetPointerX() )  )
+		print (  "TouchY:"+str( GetPointerY() )  )
+		print (  "MaxWidth:"+str( GetMaxDeviceWidth() )  )
+		print (  "MaxHeight:"+str( GetMaxDeviceHeight() )  )
 	endif
 
 	if (ScreenIsDirty = TRUE)
-		Sync()
+		if OnMobile <> TRUE
+			Sync()
+		elseif OnMobile = TRUE
+			renderImage = CreateRenderImage(ScreenWidth, ScreenHeight, 0, 0)
+			renderSprite = CreateSprite(renderImage)
+			SetSpriteSize(renderSprite, GetMaxDeviceWidth(), GetMaxDeviceHeight())
+			FixSpriteToScreen(renderSprite, 1)
+			SetSpriteDepth(renderSprite, 10000)
+			SetSpriteVisible(renderSprite, 0)
+
+			Update(GetFrameTime())
+			SetRenderToImage(renderImage, -1)
+			SetVirtualResolution(ScreenWidth, ScreenHeight)
+			ClearScreen()
+			Render()
+			SetRenderToScreen()
+			SetVirtualResolution(GetMaxDeviceWidth(), GetMaxDeviceHeight())
+			ClearScreen()
+			SetSpriteVisible(renderSprite,1)
+			DrawSprite(renderSprite)
+			Swap()
+			SetSpriteVisible(renderSprite, 0)
+			DeleteImage(renderImage)
+			DeleteSprite(renderSprite)
+		endif
+		
 		ScreenIsDirty = TRUE
 	endif
 

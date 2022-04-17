@@ -62,9 +62,9 @@ function GetAllUserInput ( )
 		else
 			MouseButtonRightReleased = TRUE
 		endif
-	else
-		MouseScreenX = GetPointerX()
-		MouseScreenY = GetPointerY()
+	elseif (OnMobile = TRUE)
+		MouseScreenX = GetPointerX() / GetMaxDeviceWidth() * 360.0
+		MouseScreenY = GetPointerY() / GetMaxDeviceHeight() * 640.0
 
 		if ( GetPointerState() = 1 )
 			MouseButtonLeft = ON

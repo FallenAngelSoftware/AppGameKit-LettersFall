@@ -153,8 +153,13 @@ function DisplaySteamOverlayScreen( )
 
 	ScreenIsDirty = TRUE
 
+	if (OnMobile = TRUE and ScreenFadeStatus = FadingIdle)
+		ScreenFadeStatus = FadingToBlack
+		NextScreenToDisplay = 3
+	endif
+
 	if ScreenFadeStatus = FadingToBlack and ScreenFadeTransparency = 254
-		PlayNewMusic(0, 1)
+		if (OnMobile = FALSE) then PlayNewMusic(0, 1)
 	endif
 endfunction
 
@@ -373,16 +378,11 @@ function DisplayTitleScreen( )
 			NextScreenToDisplay = AboutScreen
 			ScreenFadeStatus = FadingToBlack
 		elseif ThisButtonWasPressed(5) = TRUE
-		if (OnMobile = FALSE)
-//			if Platform = Web
-//				OpenBrowser( "https://fallenangelsoftware.com" )
-//			else
-//				ExitGame = 1
+			if (OnMobile = FALSE)
 				SetDelayAllUserInput(5)
 				NextScreenToDisplay = ExitScreen
 				ScreenFadeStatus = FadingToBlack
 			endif
-//		endif
 		endif
 	endif
 
