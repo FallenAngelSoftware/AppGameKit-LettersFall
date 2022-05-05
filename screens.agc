@@ -127,7 +127,7 @@ function DisplaySteamOverlayScreen( )
 
 		ClickToContinueText = CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Please Wait!", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight*.5, 3 )
 
-		ScreenDisplayTimer = 50
+		ScreenDisplayTimer = 100
 		NextScreenToDisplay = AppGameKitScreen
 
 		ScreenIsDirty = TRUE
@@ -312,7 +312,7 @@ function DisplayTitleScreen( )
 		SetSpriteColor(ScreenLine[3], 90, 251, 255, 255)
 		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "©2022 By", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-2-40-50-5-3+7, 3)
 		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Team", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-2-20-50-1+7, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''www.FallenAngelSoftware.com''", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-2-50+5+7, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''Fallen Angel Software''", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-2-50+5+7, 3)
 
 		if (SecretCodeCombined = 5432 or SecretCodeCombined = 5431) then CreateIcon(6, 360-17, 17)
 		
@@ -502,11 +502,16 @@ function DisplayOptionsScreen( )
 
 		CreateButton( 6, (ScreenWidth / 2), (ScreenHeight-40+15) )
 
-
-		if ShowCursor = TRUE
-			CreateIcon(2, (ScreenWidth/2), (ScreenHeight-100+13)-25 )
-		elseif ShowCursor = FALSE
-			CreateIcon(3, (ScreenWidth/2), (ScreenHeight-100+13)-25 )
+		if (ValveBuild = FALSE)
+			if ShowCursor = TRUE
+				CreateIcon(2, (ScreenWidth/2), (ScreenHeight-100+13)-25 )
+			elseif ShowCursor = FALSE
+				CreateIcon(3, (ScreenWidth/2), (ScreenHeight-100+13)-25 )
+			endif
+		else
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Please Play", 999, 35, 255, 255, 255, 255, 0, 0, 0, 1, 360/2, 490, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Our Other", 999, 35, 255, 255, 255, 255, 0, 0, 0, 1, 360/2, 490+35, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Great Games!", 999, 35, 255, 255, 255, 255, 0, 0, 0, 1, 360/2, 490+35+35, 3)
 		endif
 
 		ChangingBackground = FALSE
@@ -2243,7 +2248,7 @@ function DisplayExitScreen( )
 
 	if ThisButtonWasPressed(5) = TRUE
 		if Platform = Web
-			OpenBrowser( "https://fallenangelsoftware.com" )
+			OpenBrowser( "https://2dheaven.com" )
 		else
 			ExitGame = 1
 		endif

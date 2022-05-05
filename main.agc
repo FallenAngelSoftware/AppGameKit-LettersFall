@@ -55,6 +55,8 @@ remend
 #include "screens.agc"
 #include "visuals.agc"
 
+global ValveBuild = FALSE
+
 global DictionaryLetterLoading as integer
 
 global GameVersion as string
